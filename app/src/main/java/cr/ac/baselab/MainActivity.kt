@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                     for (file in rootTree!!.listFiles()) {
                         try {
                             file.name?.let { Log.e("Archivo", it) }
+                            nombre?.text = "Detenido"
                             mediaPlayer.setDataSource(this, file.uri)
                             mediaPlayer = MediaPlayer.create(this, file.uri)
                         } catch (e: Exception) {
@@ -93,21 +94,44 @@ class MainActivity : AppCompatActivity() {
             contador1 -=1
 
             var media = MediaPlayer()
-            var contador2 : Int = 0
+            var contador2: Int = 0
             var directoryUri = data?.data
             Log.e("directorio", directoryUri.toString())
             val rootTree = directoryUri?.let { it1 -> DocumentFile.fromTreeUri(this, it1) }
-            for (file in rootTree!!.listFiles()) {
-                try {
-                    if (contador2 == contador1)
-                    file.name?.let { Log.e("Archivo", it) }
-                    mediaPlayer.setDataSource(this, file.uri)
-                    mediaPlayer = MediaPlayer.create(this, file.uri)
-                } catch (e: Exception) {
-                    Log.e("Error", "No se pudo ejecutar")
-                }
+            if (contador1 + 1 < rootTree!!.listFiles().size - 1) {
+                mediaPlayer.stop()
+                contador1 = 0
+                mediaPlayer = MediaPlayer.create(this, rootTree!!.listFiles()[contador1].uri)
+                mediaPlayer.start()
+            } else {
+                mediaPlayer.stop()
+                contador1++
+                mediaPlayer = MediaPlayer.create(this, rootTree!!.listFiles()[contador1].uri)
+                mediaPlayer.start()
+            }
 
+        }
+        val botonNext: Button = findViewById(R.id.buttonNext)
+        botonNext.setOnClickListener {
+            //contador1 -= 1
 
+            var media = MediaPlayer()
+            var contador2: Int = 0
+            var directoryUri = data?.data
+            Log.e("directorio", directoryUri.toString())
+            val rootTree = directoryUri?.let { it1 -> DocumentFile.fromTreeUri(this, it1) }
+            if (contador1 + 1 > rootTree!!.listFiles().size - 1) {
+                mediaPlayer.stop()
+                contador1 = 0
+                mediaPlayer = MediaPlayer.create(this, rootTree!!.listFiles()[contador1].uri)
+                mediaPlayer.start()
+                nombre?.text = rootTree!!.listFiles()[contador1].name.toString()
+            } else {
+                mediaPlayer.stop()
+                contador1++
+                mediaPlayer = MediaPlayer.create(this, rootTree!!.listFiles()[contador1].uri)
+                mediaPlayer.start()
+                nombre?.text = rootTree!!.listFiles()[contador1].name.toString()
             }
 
         }
