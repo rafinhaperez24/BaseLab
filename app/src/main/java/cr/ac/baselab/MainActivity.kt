@@ -103,11 +103,13 @@ class MainActivity : AppCompatActivity() {
                 contador1 = 0
                 mediaPlayer = MediaPlayer.create(this, rootTree!!.listFiles()[contador1].uri)
                 mediaPlayer.start()
+                nombre?.text = rootTree!!.listFiles()[contador1].name.toString()
             } else {
                 mediaPlayer.stop()
                 contador1++
                 mediaPlayer = MediaPlayer.create(this, rootTree!!.listFiles()[contador1].uri)
                 mediaPlayer.start()
+                nombre?.text = rootTree!!.listFiles()[contador1].name.toString()
             }
 
         }
