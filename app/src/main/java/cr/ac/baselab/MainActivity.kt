@@ -92,9 +92,6 @@ class MainActivity : AppCompatActivity() {
         val botonPrev: Button = findViewById(R.id.buttonPrev)
         botonPrev.setOnClickListener {
             contador1 -=1
-
-            var media = MediaPlayer()
-            var contador2: Int = 0
             var directoryUri = data?.data
             Log.e("directorio", directoryUri.toString())
             val rootTree = directoryUri?.let { it1 -> DocumentFile.fromTreeUri(this, it1) }
@@ -115,10 +112,7 @@ class MainActivity : AppCompatActivity() {
         }
         val botonNext: Button = findViewById(R.id.buttonNext)
         botonNext.setOnClickListener {
-            //contador1 -= 1
 
-            var media = MediaPlayer()
-            var contador2: Int = 0
             var directoryUri = data?.data
             Log.e("directorio", directoryUri.toString())
             val rootTree = directoryUri?.let { it1 -> DocumentFile.fromTreeUri(this, it1) }
